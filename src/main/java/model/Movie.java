@@ -7,11 +7,15 @@ public class Movie implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private static final String NULL = "N/A";
+	
 	private String Title;
 	private String Actors;
 	private String imdbVotes;
 	private String Type;
-//	private String Year;
+	private String Year;
+	private String Metascore;
 //	private String Rated;
 //	private String Released;
 //	private String Genre;
@@ -20,19 +24,21 @@ public class Movie implements Serializable {
 //	private String Plot;
 //	private String Language;
 //	private String Country;
-//	private String Metascore;
 //	private String imdbRating;
 	
 	// Variables for "cache"
-	private String[] actors = null;
-	private Integer votes = null;
+	private String[] actors;
+	private Integer votes;
+	private Integer year;
+	private Integer metascore;
 
-	public Movie(String Title, String Actors, String imbdVotes, String Type) {
+	public Movie(String Title, String Actors, String imbdVotes, String Type, String Year, String Metascore) {
 		this.Title = Title;
 		this.Actors = Actors;
 		this.imdbVotes = imbdVotes;
 		this.Type = Type;
-//		this.Year = Year;
+		this.Year = Year;
+		this.Metascore = Metascore;
 //		this.Rated = Rated;
 //		this.Released = Released;
 //		this.Genre = Genre;
@@ -55,8 +61,25 @@ public class Movie implements Serializable {
 	public Integer getVotes() {
 		if (votes == null) {
 			votes = Integer.parseInt(imdbVotes.replace(",", ""));
-			imdbVotes = null;
 		}
 		return votes;
+	}
+	
+	public String getType() {
+		return Type;
+	}
+
+	public Integer getYear() {
+		if (year == null) {
+			year = Integer.parseInt(Year);
+		}
+		return year;
+	}
+	
+	public Integer getMetascore() {
+		if (metascore == null) {
+			metascore = (Metascore == NULL) ? 0 : Integer.parseInt(Metascore);
+		}
+		return metascore;
 	}
 }
