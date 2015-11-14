@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ar.edu.itba</groupId>
   <artifactId>pod-ITBA</artifactId>
-  <version>lucask</version>
+  <version>1.0</version>
   <packaging>jar</packaging>
   
 	<dependencies>
@@ -14,7 +14,7 @@
 	
 		<dependency>
 			<groupId>com.hazelcast</groupId>
-			<artifactId>hazelcast</artifactId>
+			<artifactId>hazelcast-all</artifactId>
 			<version>3.5.2</version>
 		</dependency>
 	
@@ -24,4 +24,28 @@
 			<version>2.4</version>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<finalName>tp-pod</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
