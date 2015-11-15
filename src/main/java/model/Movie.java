@@ -16,10 +16,10 @@ public class Movie implements Serializable {
 	private String Type;
 	private String Year;
 	private String Metascore;
+	private String Director;
 //	private String Rated;
 //	private String Released;
 //	private String Genre;
-//	private String Director;
 //	private String Writer;
 //	private String Plot;
 //	private String Language;
@@ -31,7 +31,7 @@ public class Movie implements Serializable {
 	private Integer votes;
 	private Integer year;
 	private Integer metascore;
-
+	
 	public Movie(String Title, String Actors, String imbdVotes, String Type, String Year, String Metascore) {
 		this.Title = Title;
 		this.Actors = Actors;
@@ -81,5 +81,9 @@ public class Movie implements Serializable {
 			metascore = (Metascore == NULL) ? 0 : Integer.parseInt(Metascore);
 		}
 		return metascore;
+	}
+	
+	public String getDirector() {
+		return Director;
 	}
 }

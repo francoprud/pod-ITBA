@@ -25,7 +25,9 @@ import com.hazelcast.mapreduce.JobTracker;
 import com.hazelcast.mapreduce.KeyValueSource;
 
 import core.Mapper1;
+import core.Mapper2;
 import core.Reducer1;
+import core.Reducer2;
 
 public class Main {
 	private static final String PATH = "/home/prudi/Desktop/imdb-40.json";
@@ -70,8 +72,8 @@ public class Main {
 		KeyValueSource<String, Movie> kv_source2 = KeyValueSource.fromMap(map2);
 		Job<String, Movie> job2 = tracker2.newJob(kv_source2);
 		
-		ICompletableFuture<Map<String, Integer>> comp_future2 = job2
-				.mapper(new Mapper2()).reducer(new Reducer2()).submit();
+//		ICompletableFuture<Map<String, Integer>> comp_future2 = job2
+//				.mapper(new Mapper2()).reducer(new Reducer2()).submit();
 	}
 
 	private static void populateMapWithMoviesAndYears(IMap<String, Movie> map,
