@@ -9,6 +9,9 @@ public class Movie implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String NULL = "N/A";
+	private static final String MOVIE = "movie";
+	private static final String SERIES = "series";
+	private static final String GAME = "game";
 	
 	private String Title;
 	private String Actors;
@@ -85,5 +88,17 @@ public class Movie implements Serializable {
 	
 	public String getDirector() {
 		return Director;
+	}
+	
+	public Boolean isMovie() {
+		return Type.equals(MOVIE);
+	}
+	
+	public Boolean isSeries() {
+		return Type.equals(SERIES);
+	}
+	
+	public Boolean isGame() {
+		return Type.equals(GAME);
 	}
 }
