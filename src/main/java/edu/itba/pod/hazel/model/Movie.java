@@ -22,14 +22,6 @@ public class Movie implements Serializable {
 	private String Year;
 	private String Metascore;
 	private String Director;
-//	private String Rated;
-//	private String Released;
-//	private String Genre;
-//	private String Writer;
-//	private String Plot;
-//	private String Language;
-//	private String Country;
-//	private String imdbRating;
 	
 	// Variables for "cache"
 	private String[] actors;
@@ -44,11 +36,6 @@ public class Movie implements Serializable {
 		this.Type = Type;
 		this.Year = Year;
 		this.Metascore = Metascore;
-//		this.Rated = Rated;
-//		this.Released = Released;
-//		this.Genre = Genre;
-//		this.Director = Director;
-//		this.Writer = Writer;
 	}
 	
 	public String[] getActors() {
