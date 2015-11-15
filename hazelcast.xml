@@ -25,8 +25,8 @@
            xmlns="http://www.hazelcast.com/schema/config"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <group>
-        <name>comandante</name>
-        <password>1234</password>
+        <name>group</name>
+        <password>group</password>
     </group>
     <management-center enabled="false">http://localhost:8080/mancenter</management-center>
     <network>
@@ -77,7 +77,7 @@
        -->
 
         <interfaces enabled="true">
-            <interface>10.0.100.*</interface>
+            <interface>192.168.1.*</interface>
         </interfaces>
 
 
