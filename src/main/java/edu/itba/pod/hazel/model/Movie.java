@@ -1,6 +1,8 @@
 package edu.itba.pod.hazel.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Movie implements Serializable {
 	/**
@@ -100,5 +102,17 @@ public class Movie implements Serializable {
 	
 	public Boolean isGame() {
 		return Type.equals(GAME);
+	}
+	
+	public List<ActorDuet> getActorDuets() {
+		int length = getActors().length;
+		List<ActorDuet> actor_duets = new ArrayList<ActorDuet>();
+		
+		for (int i = 0; i < length; i++) {
+			for (int j = i + 1; j < length; j++) {
+				actor_duets.add(new ActorDuet(actors[i], actors[j]));
+			}
+		}
+		return actor_duets;
 	}
 }

@@ -1,6 +1,7 @@
 package edu.itba.pod.hazel.tp;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,16 +20,18 @@ import com.hazelcast.mapreduce.KeyValueSource;
 
 import edu.itba.pod.hazel.core.Mapper1;
 import edu.itba.pod.hazel.core.Mapper2;
+import edu.itba.pod.hazel.core.Mapper3;
 import edu.itba.pod.hazel.core.Mapper4;
 import edu.itba.pod.hazel.core.Reducer1;
 import edu.itba.pod.hazel.core.Reducer2;
+import edu.itba.pod.hazel.core.Reducer3;
 import edu.itba.pod.hazel.core.Reducer4;
+import edu.itba.pod.hazel.model.ActorDuet;
 import edu.itba.pod.hazel.model.Movie;
 import edu.itba.pod.hazel.parser.Parser;
 import edu.itba.pod.hazel.utils.ActorVotesEntryComparator;
 
 public class Main {
-	private static final String PATH = "/home/prudi/Desktop/imdb-40.json";
 	private static final String NAME = "group";
 	private static final String PASSWORD = "group";
 	private static final String MAP_NAME = "movies";
@@ -89,6 +92,25 @@ public class Main {
 				}
 				break;
 			case 3:
+				populateMapOnlyWithMovies(map, movies);
+				
+				JobTracker tracker3 = client.getJobTracker(DEFAULT);
+				KeyValueSource<String, Movie> kv_source3 = KeyValueSource
+						.fromMap(map);
+				Job<String, Movie> job3 = tracker3.newJob(kv_source3);
+				
+				ICompletableFuture<Map<ActorDuet, List<String>>> comp_future3 = job3
+						.mapper(new Mapper3()).reducer(new Reducer3()).submit();
+				Set<Entry<ActorDuet, List<String>>> reduced_set3 = comp_future3
+						.get().entrySet();
+				
+				List<Entry<ActorDuet, List<String>>> actor_duets = fetchActorDuets(reduced_set3);
+				for (Entry<ActorDuet, List<String>> entry: actor_duets) {
+					System.out.println("Actors Duet: " + entry.getKey().toString());
+					for (String movie_title: entry.getValue()) {
+						System.out.println("\t" + movie_title);
+					}
+				}
 				break;
 			case 4:
 				populateMapOnlyWithMovies(map, movies);
@@ -116,10 +138,6 @@ public class Main {
 		} catch (IOException e) {
 			System.out.println("The specified path is not valid.");
 		}
-
-		// QUERY 1
-
-		// QUERY 2
 	}
 
 	private static void populateMapWithMoviesAndYears(IMap<String, Movie> map,
@@ -151,5 +169,22 @@ public class Main {
 				new ActorVotesEntryComparator());
 		pq.addAll(reduced_set);
 		return pq;
+	}
+	
+	private static List<Entry<ActorDuet, List<String>>> fetchActorDuets(Set<Entry<ActorDuet, List<String>>> entries) {
+		List<Entry<ActorDuet, List<String>>> ans = null;
+		int most_performances = 0;
+		
+		for (Entry<ActorDuet, List<String>> entry: entries) {
+			int performances = entry.getValue().size();
+			if (performances >= most_performances) {
+				if (performances > most_performances) {					
+					ans = new ArrayList<Map.Entry<ActorDuet,List<String>>>();
+					most_performances = performances;
+				}
+				ans.add(entry);
+			}
+		}
+		return ans;
 	}
 }
