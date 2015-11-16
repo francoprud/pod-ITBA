@@ -21,6 +21,7 @@ public abstract class Query {
 	public Query(HazelcastInstance client, Movie[] movies) {
 		this.client = client;
 		this.movies = movies;
+		// This random generates a new map name to avoid overriding of maps
 		map = client.getMap(String.valueOf((int) Math.random() * 10000));
 	}
 	
