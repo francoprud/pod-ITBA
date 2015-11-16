@@ -54,12 +54,13 @@ public class Main {
 			default:
 				System.out.println("The query number is not valid.");
 			}
-		} catch (InterruptedException|ExecutionException e) {
-			System.out.println("Internal server error.");
 		} catch (NumberFormatException e) {
 			System.out.println("The arguments are not valid.");
 		} catch (IOException e) {
 			System.out.println("The specified path is not valid.");
+		} catch (InterruptedException|ExecutionException e) {
+			e.printStackTrace();
+			System.out.println("Internal server error.");
 		}
 		end_query_run = System.currentTimeMillis();					// Metrics Purpose
 		
@@ -71,9 +72,11 @@ public class Main {
 		SimpleDateFormat date_parser = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss:SSSS");
 		
 		System.out.println("Reading file start time: " + "\t" + date_parser.format(start_reading_file));
-		System.out.println("Reading file end time: " + "\t" + date_parser.format(end_reading_file));
-		System.out.println("MapReduce start time: " + "\t" + date_parser.format(start_query_run));
-		System.out.println("MapReduce end time: " + "\t" + date_parser.format(end_query_run));
+		System.out.println("Reading file end time: " + "\t\t" + date_parser.format(end_reading_file));
+		System.out.println("Estimated time for reading the file: " + (end_reading_file - start_reading_file) + " ms");
+		System.out.println("MapReduce start time: " + "\t\t" + date_parser.format(start_query_run));
+		System.out.println("MapReduce end time: " + "\t\t" + date_parser.format(end_query_run));
+		System.out.println("Estimated time for MapReduce: " + (end_query_run - start_query_run) + " ms");
 	}
 
 	private static HazelcastInstance setHazlecastConfiguration(String name,
