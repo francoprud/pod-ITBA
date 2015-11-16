@@ -15,12 +15,14 @@ import edu.itba.pod.hazel.utils.ActorVotesEntryComparator;
 
 public class Query1 extends Query {
 
+	private static final String N = "N";
+	
 	private int number;
 
 	public Query1(HazelcastInstance client, Movie[] movies)
 			throws NumberFormatException {
 		super(client, movies);
-		number = Integer.parseInt(System.getProperty("N"));
+		number = Integer.parseInt(System.getProperty(N));
 	}
 
 	@Override

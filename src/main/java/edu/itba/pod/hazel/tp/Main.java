@@ -18,6 +18,8 @@ import edu.itba.pod.hazel.parser.Parser;
 public class Main {
 	private static final String NAME = "group";
 	private static final String PASSWORD = "group";
+	private static final String PATH = "path";
+	private static final String QUERY = "query";
 
 	public static void main(String[] args) throws IOException,
 			InterruptedException, ExecutionException {
@@ -29,13 +31,13 @@ public class Main {
 		HazelcastInstance client = setHazlecastConfiguration(NAME, PASSWORD);
 
 		try {
-			String path = System.getProperty("path");
+			String path = System.getProperty(PATH);
 			
 			start_reading_file = System.currentTimeMillis(); 		// Metrics Purpose
 			Movie[] movies = new Parser(path).parseMovieJson();
 			end_reading_file = System.currentTimeMillis();			// Metrics Purpose
 			
-			int query = Integer.parseInt(System.getProperty("query"));
+			int query = Integer.parseInt(System.getProperty(QUERY));
 			
 			start_query_run = System.currentTimeMillis();			// Metrics Purpose
 			switch (query) {

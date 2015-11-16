@@ -14,12 +14,14 @@ import edu.itba.pod.hazel.model.Movie;
 
 public class Query2 extends Query {
 
+	private static final String TOPE = "tope";
+	
 	private int min_year;
 
 	public Query2(HazelcastInstance client, Movie[] movies)
 			throws NumberFormatException {
 		super(client, movies);
-		min_year = Integer.parseInt(System.getProperty("tope"));
+		min_year = Integer.parseInt(System.getProperty(TOPE));
 	}
 
 	@Override
