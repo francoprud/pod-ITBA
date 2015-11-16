@@ -77,7 +77,7 @@
        -->
 
         <interfaces enabled="true">
-            <interface>192.168.1.*</interface>
+            <interface>10.6.0.*</interface>
         </interfaces>
 
 

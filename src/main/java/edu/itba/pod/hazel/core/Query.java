@@ -11,7 +11,6 @@ import com.hazelcast.mapreduce.KeyValueSource;
 import edu.itba.pod.hazel.model.Movie;
 
 public abstract class Query {
-	private static final String MAP_NAME = "movies";
 	private static final String DEFAULT = "default";
 	
 	private HazelcastInstance client;
@@ -22,7 +21,7 @@ public abstract class Query {
 	public Query(HazelcastInstance client, Movie[] movies) {
 		this.client = client;
 		this.movies = movies;
-		map = client.getMap(MAP_NAME);
+		map = client.getMap(String.valueOf((int) Math.random() * 10000));
 	}
 	
 	public abstract void run() throws InterruptedException, ExecutionException;
