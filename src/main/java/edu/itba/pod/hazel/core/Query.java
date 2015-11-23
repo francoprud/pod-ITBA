@@ -1,5 +1,6 @@
 package edu.itba.pod.hazel.core;
 
+import java.text.SimpleDateFormat;
 import java.util.concurrent.ExecutionException;
 
 import com.hazelcast.core.HazelcastInstance;
@@ -57,5 +58,17 @@ public abstract class Query {
 			if (movie.isMovie() && movie.getYear() > year)
 				map.put(movie.getTitle(), movie);
 		}
+	}
+	
+	public void printMetrics(long start_reading_file,
+			long end_reading_file, long start_query_run, long end_query_run) {
+		SimpleDateFormat date_parser = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss:SSSS");
+		
+		System.out.println("Reading file start time: " + "\t" + date_parser.format(start_reading_file));
+		System.out.println("Reading file end time: " + "\t\t" + date_parser.format(end_reading_file));
+		System.out.println("Estimated time for reading the file: " + (end_reading_file - start_reading_file) + " ms");
+		System.out.println("MapReduce start time: " + "\t\t" + date_parser.format(start_query_run));
+		System.out.println("MapReduce end time: " + "\t\t" + date_parser.format(end_query_run));
+		System.out.println("Estimated time for MapReduce: " + (end_query_run - start_query_run) + " ms");
 	}
 }

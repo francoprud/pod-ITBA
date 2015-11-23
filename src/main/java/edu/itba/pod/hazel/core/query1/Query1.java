@@ -28,13 +28,19 @@ public class Query1 extends Query {
 	@Override
 	public void run() throws InterruptedException,
 			ExecutionException {
+		long start_reading_file = System.currentTimeMillis(); 		// Metrics Purpose
 		populateMapOnlyWithMovies();
-
+		long end_reading_file = System.currentTimeMillis();			// Metrics Purpose
+		
+		long start_query_run = System.currentTimeMillis();			// Metrics Purpose
 		ICompletableFuture<Map<String, Integer>> comp_future = getJob()
 				.mapper(new Mapper1()).reducer(new Reducer1()).submit();
 		Set<Entry<String, Integer>> set = comp_future.get().entrySet();
 
 		printAnswer(set, number);
+		long end_query_run = System.currentTimeMillis();			// Metrics Purpose
+		
+		printMetrics(start_reading_file, end_reading_file, start_query_run, end_query_run);
 	}
 
 	private void printAnswer(Set<Entry<String, Integer>> set, int number) {

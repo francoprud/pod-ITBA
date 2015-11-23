@@ -23,8 +23,6 @@ public class Main {
 
 	public static void main(String[] args) throws IOException,
 			InterruptedException, ExecutionException {
-		long start_reading_file = 0;
-		long end_reading_file = 0;
 		long start_query_run = 0;
 		long end_query_run = 0;
 		
@@ -33,13 +31,10 @@ public class Main {
 		try {
 			String path = System.getProperty(PATH);
 			
-			start_reading_file = System.currentTimeMillis(); 		// Metrics Purpose
 			Movie[] movies = new Parser(path).parseMovieJson();
-			end_reading_file = System.currentTimeMillis();			// Metrics Purpose
 			
 			int query = Integer.parseInt(System.getProperty(QUERY));
 			
-			start_query_run = System.currentTimeMillis();			// Metrics Purpose
 			switch (query) {
 			case 1:
 				new Query1(client, movies).run();
@@ -60,25 +55,11 @@ public class Main {
 			System.out.println("The arguments are not valid.");
 		} catch (IOException e) {
 			System.out.println("The specified path is not valid.");
-		} catch (InterruptedException|ExecutionException e) {
-			e.printStackTrace();
+		} catch (InterruptedException e) {
+			System.out.println("Internal server error.");
+		} catch (ExecutionException e) {
 			System.out.println("Internal server error.");
 		}
-		end_query_run = System.currentTimeMillis();					// Metrics Purpose
-		
-		printMetrics(start_reading_file, end_reading_file, start_query_run, end_query_run);
-	}
-
-	private static void printMetrics(long start_reading_file,
-			long end_reading_file, long start_query_run, long end_query_run) {
-		SimpleDateFormat date_parser = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss:SSSS");
-		
-		System.out.println("Reading file start time: " + "\t" + date_parser.format(start_reading_file));
-		System.out.println("Reading file end time: " + "\t\t" + date_parser.format(end_reading_file));
-		System.out.println("Estimated time for reading the file: " + (end_reading_file - start_reading_file) + " ms");
-		System.out.println("MapReduce start time: " + "\t\t" + date_parser.format(start_query_run));
-		System.out.println("MapReduce end time: " + "\t\t" + date_parser.format(end_query_run));
-		System.out.println("Estimated time for MapReduce: " + (end_query_run - start_query_run) + " ms");
 	}
 
 	private static HazelcastInstance setHazlecastConfiguration(String name,

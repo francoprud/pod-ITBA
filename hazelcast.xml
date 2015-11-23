@@ -70,12 +70,11 @@
         <interfaces enabled="true">
             <interface>127.0.0.1</interface>
         </interfaces>
-
+	
         <interfaces enabled="true">
-            <interface>192.168.1.*</interface>
+            <interface>192.168.56.*</interface>
         </interfaces>
-       -->
-
+	-->
         <interfaces enabled="true">
             <interface>10.6.0.*</interface>
         </interfaces>
